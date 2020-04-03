@@ -1,0 +1,38 @@
+plugins {
+    id 'org.springframework.boot' version '2.2.6.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+}
+
+group = 'com.inyaa'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.2.6.RELEASE'
+    implementation 'org.springframework.security:spring-security-jwt:1.1.0.RELEASE'
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'mysql:mysql-connector-java'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
