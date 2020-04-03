@@ -1,6 +1,5 @@
 package com.inyaa.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,17 +11,13 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
-import org.springframework.security.oauth2.provider.code.RandomValueAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.error.WebResponseExceptionTranslator;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
-import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
-import java.util.Arrays;
 
 /**
  * 授权服务器
@@ -45,18 +40,7 @@ public class OAuth2AuthorizationServer extends AuthorizationServerConfigurerAdap
     @Resource
     private UserDetailsService userDetailsService;
     @Resource
-    private WebResponseExceptionTranslator webResponseExceptionTranslator;
-
-    /**
-     * 对Jwt签名时，增加一个密钥
-     * JwtAccessTokenConverter：对Jwt来进行编码以及解码的类
-     */
-    @Bean
-    public JwtAccessTokenConverter accessTokenConverter() {
-        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey("test-secret");
-        return converter;
-    }
+    private WebResponseExceptionTranslator authWebResponseExceptionTranslator;
 
     /**
      * 数据库模式
@@ -76,7 +60,7 @@ public class OAuth2AuthorizationServer extends AuthorizationServerConfigurerAdap
         TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
         //tokenEnhancerChain.setTokenEnhancers(Arrays.asList(tokenEnhancer()));
         endpoints.tokenEnhancer(tokenEnhancerChain);
-        endpoints.exceptionTranslator(webResponseExceptionTranslator);
+        endpoints.exceptionTranslator(authWebResponseExceptionTranslator);
     }
 
     @Override
