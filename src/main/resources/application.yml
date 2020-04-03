@@ -9,10 +9,3 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
     show-sql: true
-    generateDdl: true
-
-security:
-  oauth2:
-    resource:
-      jwt:
-        key-value: test-secret
