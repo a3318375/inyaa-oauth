@@ -25,9 +25,5 @@ public class UserInfo {
     private boolean accountNonLocked; // 账号是否未锁定
     private boolean credentialsNonExpired; // 账号凭证是否未过期
     private boolean enabled; // 账号是否可用
-    private String roleIds;//该用户拥有角色ID集合
-    private String roleNames;//该用户拥有角色名字集合
-    private String organizationId;//所属机构ID
-    private String organizationName;//所属机构名称
 
 }
